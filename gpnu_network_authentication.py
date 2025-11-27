@@ -1,6 +1,18 @@
 import re
+import time
 import urllib.parse
 import requests
+
+
+def main():
+    STUDENT_ID = "学号"
+    PASSWORD = "密码"
+    GENERATE_204_URL = "http://connect.rom.miui.com/generate_204"
+    WAITING_SECONDS = 1
+
+    while not login(STUDENT_ID, PASSWORD, GENERATE_204_URL):
+        time.sleep(WAITING_SECONDS)
+        pass
 
 
 def extract_query_string(html_content):
@@ -8,7 +20,6 @@ def extract_query_string(html_content):
         r"top\.self\.location\.href='https://ruijieportal\.gpnu\.edu\.cn:8443/eportal/index\.jsp\?([^']+)'",
         html_content
     )
-
     return match.group(1) if match else None
 
 
@@ -38,17 +49,15 @@ def create_request_data(student_id, password, query_string):
 
 
 def login(student_id, password, generate_204_url):
-    print("测试网络连接...")
-    response = requests.get(generate_204_url, timeout=5, allow_redirects=True)
-
-    if response.status_code == 204:
-        print("网络已连接。")
-        return True
-
-    print("连接失败，尝试认证...")
-
     try:
-        print("获取认证参数...")
+        print("测试网络连接...")
+        response = requests.get(generate_204_url, timeout=5, allow_redirects=True)
+
+        if response.status_code == 204:
+            print("网络已连接。")
+            return True
+
+        print("连接失败，尝试认证...")
 
         query_string = extract_query_string(response.text)
         if not query_string:
@@ -76,9 +85,4 @@ def login(student_id, password, generate_204_url):
 
 
 if __name__ == "__main__":
-    STUDENT_ID = "学号"
-    PASSWORD = "密码"
-    GENERATE_204_URL = "http://connect.rom.miui.com/generate_204"
-
-    while not login(STUDENT_ID, PASSWORD, GENERATE_204_URL):
-        pass
+    main()
