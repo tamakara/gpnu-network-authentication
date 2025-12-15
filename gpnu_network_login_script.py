@@ -74,7 +74,7 @@ def network_login(student_id, password, generate_204_url):
             "http://10.0.6.247/eportal/InterFace.do?method=login",
             headers=headers,
             data=post_data,
-            timeout=5
+            timeout=10
         )
 
         if '"result":"success"' in login_response.text:
