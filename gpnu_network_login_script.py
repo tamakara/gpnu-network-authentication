@@ -5,10 +5,14 @@ import requests
 
 
 def main():
-    STUDENT_ID = "学号"
-    PASSWORD = "密码"
+    # 学号
+    STUDENT_ID = "你的学号"
+    # 密码
+    PASSWORD = "你的校园网密码"
+    # 间隔时长
+    WAITING_SECONDS = 10
+    # 204测试地址
     GENERATE_204_URL = "http://connect.rom.miui.com/generate_204"
-    WAITING_SECONDS = 5
 
     while True:
         network_login(STUDENT_ID, PASSWORD, GENERATE_204_URL)
