@@ -19,20 +19,27 @@
 ## 环境要求
 
 - Python 3.8+
-- 依赖：`requests`
+- 依赖：`requests`、`python-dotenv`
 
 安装依赖：
 
 ```bash
-pip install requests
+pip install requests python-dotenv
 ```
 
 ## 快速开始
 
-1. 编辑 `main.py`，修改以下变量：
-   - `student_id`：学号
-   - `password`：校园网密码
-   - `default_url`：备用重定向 URL（建议替换为你当前环境抓到的最新值）
+1. 设置环境变量：
+
+```powershell
+$env:STUDENT_ID="你的学号"
+$env:PASSWORD="你的校园网密码"
+$env:DEFAULT_URL="你的备用重定向URL"
+```
+
+或在项目根目录创建 `.env`（已在 `.gitignore` 中忽略）。
+脚本启动时会自动加载该文件。
+
 2. 运行脚本：
 
 ```bash
@@ -55,7 +62,7 @@ python main.py
 ## 常见问题
 
 1. `ModuleNotFoundError: requests`
-   - 执行 `pip install requests` 安装依赖。
+   - 执行 `pip install requests python-dotenv` 安装依赖。
 2. 登录失败或返回异常
    - 检查学号、密码是否正确。
    - 检查 `default_url` 是否过期，必要时更新为当前网络环境值。
@@ -64,8 +71,8 @@ python main.py
 
 ## 安全建议
 
-- 当前版本在 `main.py` 中明文保存账号密码，不建议提交到公开仓库。
-- 建议后续改为环境变量或本地配置文件（并在 `.gitignore` 中忽略）。
+- 请勿将账号密码写入代码仓库。
+- 当前版本使用环境变量读取 `STUDENT_ID`、`PASSWORD`、`DEFAULT_URL`，并已忽略 `.env` 文件。
 
 ## 可选：开机自动登录（Windows）
 
